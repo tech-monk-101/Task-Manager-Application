@@ -24,10 +24,8 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id)
-                .map(ResponseEntity::ok) //If found it's wrapped with response entity with status code ok
-                .orElse(ResponseEntity.notFound().build()); //if not found
+    public Task getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
     //CUSTOM QUERY
@@ -43,10 +41,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.updateTask(id, updatedTask)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+        return taskService.updateTask(id, updatedTask);
     }
 
     @PostMapping
@@ -57,9 +53,8 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        return taskService.deleteTask(id) ?
-                ResponseEntity.ok().build() :
-                ResponseEntity.notFound().build();
+        taskService.deleteTask(id);
+        return ResponseEntity.ok().build();
     }
 }
 
